@@ -1,3 +1,5 @@
+-- ==== 2 & 3 =====
+
 -- Inserting authors name in authors tables
 INSERT INTO authors (first_name, last_name, country, birth_year) VALUES
 ('Chinua',    'Achebe',     'Nigeria',     1930),

@@ -1,3 +1,5 @@
+-- ==== 1 =====
+
 CREATE TABLE authors (
 author_id SERIAL PRIMARY KEY,
 first_name VARCHAR(50) NOT NULL,
@@ -7,7 +9,7 @@ birth_year INT CHECK (birth_year BETWEEN 1000 AND 2100),
 CONSTRAINT uq_author_name UNIQUE(first_name,last_name)
 );
 
- CREATE TABLE books(
+CREATE TABLE books(
 books_id SERIAL PRIMARY KEY,
 title VARCHAR(200) NOT NULL,
 genre VARCHAR(50) ,
