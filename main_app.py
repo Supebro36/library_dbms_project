@@ -1,16 +1,9 @@
 """
 Library Management - Python connection with a PARAMETERIZED query.
 
-Setup (once):
-    pip install psycopg2-binary
+Setup (once): pip install psycopg2-binary
 
-Run:
-    python library_app.py                      # default author: Pratchett
-    python library_app.py Orwell               # any author last name
-    python library_app.py Orwell --overdue 5   # also show loans overdue >= 5 days
-
-Connection settings come from environment variables, with defaults you can edit:
-    PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD
+Run: python library_app.py
 """
 import argparse
 import os
@@ -32,10 +25,6 @@ def get_connection():
         password=os.getenv("DB_PASS"),
     )
 
-
-# %s are PLACEHOLDERS. The driver sends the values separately from the SQL,
-# so a malicious value like  x'; DROP TABLE books; --  is treated as plain
-# text and can never change the query.
 BOOKS_BY_AUTHOR_SQL = """
     SELECT b.title, b.genre, b.publication_year, b.available_copies
     FROM books b
@@ -58,8 +47,6 @@ OVERDUE_SQL = """
 
 def books_by_author(conn, last_name):
     with conn.cursor() as cur:
-        # The values go in a tuple as the SECOND argument - never use f-strings
-        # or % formatting to build the SQL text yourself.
         cur.execute(BOOKS_BY_AUTHOR_SQL, (last_name,))
         return cur.fetchall()
 
@@ -101,11 +88,6 @@ def main():
     finally:
         if conn is not None:
             conn.close()
-
-
-# What NOT to do (SQL injection risk) - kept as a comment for your report:
-#   cur.execute(f"SELECT * FROM authors WHERE last_name = '{user_input}'")   # UNSAFE
-#   cur.execute("SELECT * FROM authors WHERE last_name = %s", (user_input,)) # SAFE
 
 if __name__ == "__main__":
     main()
