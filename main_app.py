@@ -59,10 +59,8 @@ def overdue_loans(conn, min_days):
 
 def main():
     parser = argparse.ArgumentParser(description="Library database demo")
-    parser.add_argument("author", nargs="?", default="Pratchett",
-                        help="author last name (case-insensitive)")
-    parser.add_argument("--overdue", type=int, default=None, metavar="DAYS",
-                        help="also list loans overdue by at least DAYS days")
+    parser.add_argument("author", nargs="?", default="Pratchett",help="author last name (case-insensitive)")
+    parser.add_argument("--overdue", type=int, default=None, metavar="DAYS",help="also list loans overdue by at least DAYS days")
     args = parser.parse_args()
 
     conn = None
